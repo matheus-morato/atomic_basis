@@ -1,0 +1,50 @@
+$python3 ../r_r2.py full s_type_basis s_type_orbital s
+Orbital #0
+Norm =  [[0.99999913]]
+r-Value =  [[3.4471072]]
+r-Value/Norm =  [[3.44711022]]
+r2-Value =  [[13.91283763]]
+r2-Value/Norm =  [[13.9128498]]
+r/sqrt(r2) =  [[0.9241599]]
+
+$python3 ../r_r2.py full p_type_basis p_type_orbital p
+Orbital #0
+Norm =  [[1.00000026]]
+r-Value =  [[0.870285]]
+r-Value/Norm =  [[0.87028478]]
+r2-Value =  [[0.89475287]]
+r2-Value/Norm =  [[0.89475264]]
+r/sqrt(r2) =  [[0.92004675]]
+
+$python3 ../r_r2.py full d_type_basis d_type_orbital d
+Orbital #0
+Norm =  [[0.99999914]]
+r-Value =  [[1.1970727]]
+r-Value/Norm =  [[1.19707374]]
+r2-Value =  [[1.94193816]]
+r2-Value/Norm =  [[1.94193984]]
+r/sqrt(r2) =  [[0.85901949]]
+
+$python3 ../r_r2.py full d_type_basis second_d_type_orbital d
+Orbital #0
+Norm =  [[1.0000008]]
+r-Value =  [[1.13132794]]
+r-Value/Norm =  [[1.13132703]]
+r2-Value =  [[1.70740229]]
+r2-Value/Norm =  [[1.70740092]]
+r/sqrt(r2) =  [[0.86580563]]
+Orbital #1
+Norm =  [[0.99999895]]
+r-Value =  [[1.82667615]]
+r-Value/Norm =  [[1.82667807]]
+r2-Value =  [[4.6143799]]
+r2-Value/Norm =  [[4.61438475]]
+r/sqrt(r2) =  [[0.85036448]]
+
+$python3 ../proj.py d_type_basis d_type_orbital second_d_type_orbital d
+<C_2|3d> = 1.000
+<C_1|3d> = 0.999
+<C_1|4d> = 0.046
+[[0.99882414 0.04610522 0.99988768]
+ [0.99882414 0.04610522 0.        ]]
+
