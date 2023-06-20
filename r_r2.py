@@ -1,14 +1,16 @@
 import sys
 import numpy as np
+from math import factorial
+from scipy.special import factorial2
 
-orbital_list={ 's' : 0,
-               'p' : 1,
-               'd' : 2,
-               'f' : 3,
-               'g' : 4,
-               'h' : 5,
-               'i' : 6,
-               'j' : 7}
+orbital_list={ 's' : int(0),
+               'p' : int(1),
+               'd' : int(2),
+               'f' : int(3),
+               'g' : int(4),
+               'h' : int(5),
+               'i' : int(6),
+               'j' : int(7)}
 
 
 def open_basis(basis_file):
@@ -104,31 +106,23 @@ def calculator(typ,more,exp,Contraction,Coef):
        <i|r^2|j> = [(4e_i*e_j)^((2l+3)/4)/(e_i+e_j)^((2l+5)/2)]*(2l+3)/2
 
        where e_i is the expoent of |i> and l is the orbital angular number (0 for s, 1 for p, ...).
-      
-       #TODO: implement the general case
     '''
     if typ == 'r':
         tam=len(exp)
         Integrals=np.zeros((tam,tam))                          
+        if not isinstance(more, int) or more < 0:
+            raise ValueError('The orbital angular moment must be a natural number.')
+        fac_value=factorial(more+1)/factorial2(2*more+1, exact=True) 
+        print(fac_value)
         for a in range(tam):                                   
             for b in range(tam):
-                if more == 0:
-                    Integrals[a][b]=((4*exp[a]*exp[b])**(3/4)/(exp[a]+exp[b])**(2))*(2/(np.pi**(1/2)))    #s orbital
-                elif more == 1:
-                    Integrals[a][b]=((4*exp[a]*exp[b])**(5/4)/(exp[a]+exp[b])**(3))*(2**3/(3*(np.pi**(1/2))))    #p orbital
-                elif more == 2:
-                    Integrals[a][b]=((4*exp[a]*exp[b])**(7/4)/(exp[a]+exp[b])**(4))*(2**4/(5*(np.pi**(1/2))))    #d orbital
+                Integrals[a][b]=((exp[a]*exp[b])**((2*more+3)/4)/(exp[a]+exp[b])**(more+2))*(2**((4*more+5)/2)*fac_value/(np.pi**(1/2)))
     elif typ == 'r2':
         tam=len(exp)
         Integrals=np.zeros((tam,tam))
         for a in range(tam):
             for b in range(tam):
-                if more == 0:
-                    Integrals[a][b]=((4*exp[a]*exp[b])**(3/4)/(exp[a]+exp[b])**(5/2))*(3/2)    #s orbital
-                elif more == 1:
-                    Integrals[a][b]=((4*exp[a]*exp[b])**(5/4)/(exp[a]+exp[b])**(7/2))*(5/2)    #p orbital
-                elif more == 2:
-                    Integrals[a][b]=((4*exp[a]*exp[b])**(7/4)/(exp[a]+exp[b])**(9/2))*(7/2)    #d orbital
+                Integrals[a][b]=((4*exp[a]*exp[b])**((2*more+3)/4)/(exp[a]+exp[b])**((2*more+5)/2))*((2*more+3)/2)
 
     #print(Contraction)
     #print(np.matmul(np.matmul(Coef,Contraction),Integrals,np.matmul(Contraction.transpose(),Coef.transpose())))
@@ -153,19 +147,14 @@ def orbital_normalizer(exp,tam,more):
        <i|j> = [(4e_i*e_j)/(e_i+e_j)^2]^((2l+3)/4)
 
        where e_i is the expoent of |i> and l is the orbital angular number (0 for s, 1 for p, ...).
-      
-       #TODO: implement the general case
     '''
     tam=len(exp)
     Norm=np.zeros((tam,tam))
+    if not isinstance(more, int) or more < 0:
+        raise ValueError('The orbital angular moment must be a natural number.')
     for a in range(tam):
         for b in range(tam):
-            if more == 0:
-                Norm[a][b]=((4*exp[a]*exp[b])/(exp[a]+exp[b])**2)**(3/4) #s_orbital
-            elif more == 1:
-                Norm[a][b]=((4*exp[a]*exp[b])/(exp[a]+exp[b])**2)**(5/4) #p_orbital
-            elif more == 2:
-                Norm[a][b]=((4*exp[a]*exp[b])/(exp[a]+exp[b])**2)**(7/4) #d_orbital
+             Norm[a][b]=((4*exp[a]*exp[b])/(exp[a]+exp[b])**2)**((2*more+3)/4) 
      
     return Norm
 
